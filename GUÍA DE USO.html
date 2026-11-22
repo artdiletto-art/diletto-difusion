@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tutorial interactivo · Panel de difusión Diletto</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F6F1;--card:#fff;--ink:#1D211E;--mute:#6B736C;--line:#E4E6DF;--pine:#1F3B2D;--aji:#E9A020;--wa:#178A4A;--field:#F1F2EC;--danger:#B3261E;--soft:#FFF3D6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1310;--card:#171D19;--ink:#ECEFEA;--mute:#98A199;--line:#262E29;--pine:#2C5842;--field:#1D2420;--danger:#F2918A;--soft:#3A3014}}
+:root[data-theme="dark"]{--bg:#0E1310;--card:#171D19;--ink:#ECEFEA;--mute:#98A199;--line:#262E29;--pine:#2C5842;--field:#1D2420;--danger:#F2918A;--soft:#3A3014}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);background:radial-gradient(900px 420px at 50% -80px,color-mix(in srgb,var(--aji) 16%,transparent),transparent),var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.45}
+.wrap{max-width:980px;margin:0 auto;padding:22px 16px 40px}
+h1{font-family:'Bricolage Grotesque','DM Sans',sans-serif;font-size:clamp(1.4rem,4vw,2rem);letter-spacing:-.02em;margin:0 0 4px}
+.sub{margin:0 0 20px;color:var(--mute)}
+.stage{display:grid;gap:22px;justify-items:center}
+@media(min-width:900px){.stage{grid-template-columns:auto 1fr;align-items:start;justify-items:stretch}}
+.phone{width:344px;max-width:100%;height:660px;border:10px solid #151A17;border-radius:42px;background:var(--bg);position:relative;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+.phone::before{content:"";position:absolute;top:8px;left:50%;width:84px;height:18px;margin-left:-42px;border-radius:12px;background:#151A17;z-index:30}
+.app{height:100%;display:flex;flex-direction:column;padding-top:26px;font-size:12px;position:relative}
+.hd{padding:6px 10px}
+.hd b{font:800 17px 'Bricolage Grotesque','DM Sans',sans-serif;letter-spacing:-.01em}
+.r{display:flex;gap:4px;margin:7px 0}
+button{font:inherit;color:inherit}
+.b{flex:1;border:1px solid var(--line);background:var(--card);border-radius:9px;padding:7px 2px;font-weight:700;font-size:11px;cursor:pointer}
+.b.p{background:var(--pine);color:#fff;border-color:var(--pine)}
+.sg{display:flex;background:var(--field);border:1px solid var(--line);border-radius:11px;padding:3px;margin-bottom:7px}
+.sg button{flex:1;border:0;background:transparent;border-radius:8px;padding:7px 0;font-weight:700;font-size:11px;color:var(--mute);cursor:pointer}
+.sg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.in{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 9px;font:inherit;font-size:12px}
+.list{flex:1;overflow-y:auto;padding:4px 10px 18px;position:relative;scroll-behavior:smooth}
+.hint{color:var(--mute);font-size:10.5px;margin:2px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:9px}
+.im{height:74px;background:var(--field);display:flex;align-items:center;justify-content:center;font-size:38px;position:relative}
+.card.sold .im>span{opacity:.35;filter:grayscale(1)}
+.mv{position:absolute;top:6px;left:6px;display:flex;gap:5px}
+.mv>*{width:27px;height:27px;border-radius:8px;border:0;background:rgba(255,255,255,.93);color:#1D211E;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2);padding:0}
+.mv>span{cursor:grab}
+.bd{position:absolute;top:7px;right:7px;background:var(--danger);color:#fff;font-size:9.5px;padding:3px 8px;border-radius:99px}
+.cb{padding:9px}
+.nm{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px}
+.st{border:1px solid var(--line);background:var(--card);border-radius:8px;width:30px;height:26px;cursor:pointer;color:var(--mute)}
+.st.on{background:var(--aji);border-color:var(--aji);color:#20150A}
+.fl{display:flex;gap:5px;margin-bottom:6px}.fl .in:first-child{flex:0 0 82px}
+.pv{white-space:pre-line;margin:0 0 7px;background:var(--field);border:1px solid var(--line);border-radius:9px;padding:8px;font-size:10.5px;line-height:1.5}
+.pv mark{background:var(--soft);color:inherit;border-radius:4px;padding:0 2px}
+.bt{display:flex;flex-direction:column;gap:5px}
+.q{border:0;background:transparent;color:var(--mute);font-weight:700;font-size:11px;padding:6px;cursor:pointer;border-radius:8px;align-self:flex-start}
+.wa{border:0;background:var(--wa);color:#fff;font-weight:700;border-radius:10px;padding:10px;font-size:12px;cursor:pointer;width:100%}
+.row{display:flex;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 10px;margin-bottom:5px}
+.row.off{opacity:.45}
+.dlg{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;z-index:20}
+.dlg>div{width:100%;background:var(--card);border-radius:18px 18px 0 0;padding:14px;animation:up .25s}
+.dlg h4{margin:0 0 8px;font:800 15px 'Bricolage Grotesque','DM Sans',sans-serif}
+.dlg p{margin:0 0 8px;color:var(--mute);white-space:pre-line}
+.dlg label{display:block;font-weight:700;font-size:11px;margin:8px 0 4px}
+.dr{display:flex;gap:6px;margin-top:10px}.dr .b{padding:9px 2px}
+.ap{display:flex;gap:8px;margin:6px 0 4px}.ap button{flex:1;border:1px solid var(--line);background:var(--field);border-radius:12px;padding:12px 2px;font-size:11px;font-weight:700;cursor:pointer}
+.ap span{display:block;font-size:22px}
+#tst{position:absolute;left:10px;right:10px;bottom:14px;display:flex;flex-direction:column;gap:6px;z-index:40;pointer-events:none}
+.toast{background:var(--pine);color:#fff;border-radius:12px;padding:9px 12px;font-size:11.5px;text-align:center;animation:up .25s}
+.hidden{display:none!important}
+.tap{outline:3px solid var(--aji)!important;outline-offset:2px;animation:bl 1s ease-in-out infinite}
+.flash{animation:fl 1.2s}
+@keyframes bl{50%{outline-color:transparent}}
+@keyframes fl{0%{box-shadow:0 0 0 5px var(--aji)}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes up{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+/* lado: texto y controles */
+.side{width:100%;max-width:520px}
+.cap{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;min-height:150px}
+.step{font-size:.78rem;font-weight:700;color:var(--aji);letter-spacing:.04em;text-transform:uppercase}
+.cap h2{font:800 1.3rem 'Bricolage Grotesque','DM Sans',sans-serif;margin:2px 0 6px;letter-spacing:-.01em}
+.cap p{margin:0;color:var(--mute)}
+.ctl{display:flex;gap:8px;margin:12px 0}
+.cb2{flex:1;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-weight:700;cursor:pointer}
+.cb2.main{background:var(--pine);color:#fff;border-color:var(--pine);flex:2}
+.cb2:focus-visible,.chip:focus-visible,.phone button:focus-visible,.phone input:focus-visible{outline:3px solid var(--aji);outline-offset:2px}
+.chips{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.chip{display:flex;align-items:center;gap:9px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 11px;font-weight:600;font-size:.88rem;cursor:pointer;position:relative;overflow:hidden}
+.chip .n{width:22px;height:22px;border-radius:50%;background:var(--field);display:grid;place-items:center;font-size:.75rem;flex:none}
+.chip.done .n{background:var(--pine);color:#fff}
+.chip.on{border-color:var(--aji);background:var(--soft)}
+.chip i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--aji)}
+.chip.on i{animation:pg linear forwards;animation-duration:var(--d)}
+.paused .chip.on i{animation-play-state:paused}
+@keyframes pg{to{width:100%}}
+.tip{margin-top:10px;font-size:.82rem;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.tap{outline:3px solid var(--aji)}}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <h1>Aprende a usar el panel de difusión</h1>
+  <p class="sub">Tutorial interactivo · 10 pasos · mira la demostración o toca el celular y practica</p>
+  <div class="stage">
+    <div class="phone" aria-label="Celular de práctica"><div class="app" id="app"></div></div>
+    <div class="side">
+      <div class="cap" aria-live="polite"><div class="step" id="st"></div><h2 id="ti"></h2><p id="de"></p></div>
+      <div class="ctl">
+        <button class="cb2" id="bp" aria-label="Paso anterior">◀</button>
+        <button class="cb2 main" id="bpl">⏸ Pausar y practicar</button>
+        <button class="cb2" id="bn" aria-label="Paso siguiente">▶</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="tip">Consejo: en cualquier momento toca el celular para tomar el control. Los datos de este celular son de práctica y no se guardan.</p>
+    </div>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const D=[
+ {id:'p',t:'plat',n:'Pizzas artesanales',e:'🍕',b:'Masa suave y mucho queso. 🧀'},
+ {id:'l',t:'plat',n:'Lasaña',e:'🍝',b:'Capas llenas de sabor. 🧀'},
+ {id:'c',t:'plat',n:'Picarones',e:'🍩',b:'Calientitos, con miel de chancaca. 🍯'},
+ {id:'g',t:'plat',n:'Pollo al horno',e:'🍗',b:'Dorado y jugoso. 🔥'},
+ {id:'f',t:'combo',n:'Combo Familiar',e:'👨‍👩‍👧',b:'Pollo, papas y jarra de chicha. 🍽️'}];
+const dish=id=>D.find(d=>d.id===id);
+let S;
+const fresh=()=>({order:D.map(d=>d.id),price:{},urg:{},sold:{},star:{},tab:'plat',q:'',phone:''});
+const ph=()=>{const p=S.phone.replace(/\D/g,'');return p.length===9?'51'+p:p};
+const vis=()=>{const n=norm(S.q.trim());
+  if(n)return S.order.filter(id=>norm(dish(id).n+' '+dish(id).b).includes(n));
+  if(S.tab==='hoy')return S.order.filter(id=>S.star[id]);
+  return S.order.filter(id=>dish(id).t===S.tab)};
+const pvHTML=id=>{const d=dish(id),L=['🌟 *'+esc(d.n)+'* | Diletto Artesanal',esc(d.b)];
+  if(S.price[id])L.push('<mark>💰 Precio: S/ '+esc(S.price[id])+'</mark>');
+  if(S.urg[id])L.push('<mark>⏳ '+esc(S.urg[id])+'</mark>');
+  L.push('🛵 ¡Delivery GRATIS en Rázuri!');
+  L.push(S.phone?'<mark>📲 Pide aquí: wa.me/'+esc(ph())+'</mark>':'📲 Escríbenos y haz tu pedido ahora.');
+  return L.join('\n')};
+$('#app').innerHTML=`<div class="hd"><b>Diletto Artesanal</b><div class="r"><button class="b" id="bH">Historial</button><button class="b" id="bA">Ajustes</button><button class="b p">+ Agregar</button></div><div class="sg" id="tabs"></div><input id="q" class="in" placeholder="Buscar platillo o combo" autocomplete="off" aria-label="Buscar platillo o combo"></div><div class="list" id="list"></div><div id="dlg" class="dlg hidden"></div><div id="tst"></div>`;
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;$('#tst').appendChild(e);setTimeout(()=>e.remove(),3200)}
+function drawTabs(){$('#tabs').innerHTML=[['hoy','⭐ Hoy'],['plat','Platillos'],['combo','Combos']].map(([k,l])=>`<button data-tab="${k}" class="${S.tab===k&&!S.q.trim()?'on':''}">${l}</button>`).join('')}
+function drawList(){
+  const ids=vis(),q=S.q.trim();let h='';
+  if(q)h+=`<p class="hint">Resultados para “${esc(q)}” en todas las pestañas</p>`;
+  if(S.tab==='hoy'&&!q){
+    h+=ids.length?ids.map(id=>`<div class="row${S.sold[id]?' off':''}"><span>${dish(id).e} <b>${dish(id).n}</b>${S.price[id]?' – S/ '+esc(S.price[id]):''}</span><span>${S.sold[id]?'Agotado':'⭐'}</span></div>`).join('')+`<p class="hint">${ids.some(i=>S.sold[i])?'Los agotados no se incluyen en el menú.':'Todo lo de hoy sale en un solo mensaje.'}</p><button class="wa" data-a="menu">Enviar menú de hoy (todo en un mensaje)</button>`:'<p class="hint">Marca con ⭐ lo que vendes hoy y aparecerá aquí.</p>';
+  }else if(!ids.length){h+='<p class="hint">Sin resultados. Prueba con otra palabra.</p>'}
+  else h+=ids.map(id=>{const d=dish(id);return `<article class="card${S.sold[id]?' sold':''}" data-id="${id}"><div class="im"><span>${d.e}</span><div class="mv"><span aria-hidden="true" title="Arrastra">⠿</span><button data-a="prev" aria-label="Mover antes">◀</button><button data-a="next" aria-label="Mover después">▶</button></div>${S.sold[id]?'<b class="bd">AGOTADO</b>':''}</div><div class="cb"><div class="nm"><b>${d.n}</b><button class="st${S.star[id]?' on':''}" data-a="star" aria-label="Vender hoy">★</button></div><div class="fl"><input class="in" data-f="price" inputmode="decimal" placeholder="S/ precio" value="${esc(S.price[id]||'')}"><input class="in" data-f="urg" placeholder="Urgencia (ej. ¡Solo hoy!)" value="${esc(S.urg[id]||'')}"></div><p class="pv">${pvHTML(id)}</p><div class="bt"><button class="q" data-a="sold">${S.sold[id]?'Quitar agotado':'Marcar agotado'}</button><button class="wa" data-a="send">Enviar con imagen a WhatsApp</button></div></div></article>`}).join('');
+  $('#list').innerHTML=h;
+}
+const paint=()=>{drawTabs();drawList()};
+const issues=ids=>{const p=[];if(!S.phone)p.push('• No tienes tu número en Ajustes: el mensaje saldrá sin el enlace para pedir por WhatsApp.');
+  const np=ids.filter(i=>!S.price[i]);if(np.length)p.push(np.length===1?'• “'+dish(np[0]).n+'” no tiene precio.':'• '+np.length+' platillos no tienen precio.');return p};
+function dlg(kind,ids){
+  const d=$('#dlg');let h='';
+  if(kind==='warn')h=`<h4>Antes de enviar</h4><p>${issues(ids).join('\n')}</p><div class="dr">${S.phone?'':'<button class="b" id="dSet">Abrir Ajustes</button>'}<button class="b" id="dBack">Revisar</button><button class="b p" id="dGo">Enviar igual</button></div>`;
+  if(kind==='set')h=`<h4>Ajustes</h4><label for="sPh">Tu WhatsApp para pedidos (con o sin 51)</label><input class="in" id="sPh" inputmode="tel" placeholder="9XXXXXXXX" value="${esc(S.phone)}"><label>Respaldo</label><button class="b" id="sExp" style="width:100%">Exportar respaldo</button><p style="margin:6px 0 0;font-size:10.5px">Tus datos viven en el celular: exporta un respaldo de vez en cuando.</p><div class="dr"><button class="b p" id="sOk">Listo</button></div>`;
+  if(kind==='share')h=`<h4>Compartir con…</h4><div class="ap"><button id="shWa"><span>💬</span>WhatsApp</button><button><span>📋</span>Copiar</button><button><span>✉️</span>Mensajes</button></div>`;
+  d.innerHTML='<div>'+h+'</div>';d.classList.remove('hidden');
+}
+const closeDlg=()=>$('#dlg').classList.add('hidden');
+function trySend(ids){issues(ids).length?dlg('warn',ids):dlg('share')}
+function move(id,dir){const v=vis(),i=v.indexOf(id),j=i+dir;if(j<0||j>=v.length)return;
+  const a=S.order.indexOf(id),b=S.order.indexOf(v[j]);[S.order[a],S.order[b]]=[S.order[b],S.order[a]];drawList()}
+$('#list').addEventListener('click',e=>{
+  const bt=e.target.closest('[data-a]');if(!bt)return;const c=bt.closest('.card'),id=c&&c.dataset.id,a=bt.dataset.a;
+  if(a==='prev')move(id,-1);else if(a==='next')move(id,1);
+  else if(a==='star'){S.star[id]=!S.star[id];drawList()}
+  else if(a==='sold'){S.sold[id]=!S.sold[id];drawList()}
+  else if(a==='send')trySend([id]);
+  else if(a==='menu')trySend(vis().filter(i=>!S.sold[i]));
+});
+$('#list').addEventListener('input',e=>{const f=e.target.dataset.f;if(!f)return;const c=e.target.closest('.card'),id=c.dataset.id;(f==='price'?S.price:S.urg)[id]=e.target.value;c.querySelector('.pv').innerHTML=pvHTML(id)});
+$('#tabs').addEventListener('click',e=>{const t=e.target.dataset.tab;if(t){S.tab=t;S.q='';$('#q').value='';paint()}});
+$('#q').addEventListener('input',e=>{S.q=e.target.value;paint()});
+$('#bA').onclick=()=>dlg('set');
+$('#bH').onclick=()=>toast('Aquí ves qué enviaste cada día');
+$('#dlg').addEventListener('click',e=>{
+  const id=e.target.id;
+  if(id==='dBack'||id==='sOk'){closeDlg();drawList()}
+  else if(id==='dSet')dlg('set');
+  else if(id==='dGo')dlg('share');
+  else if(id==='shWa'){closeDlg();toast('Elige WhatsApp: la imagen sale con el mensaje')}
+  else if(id==='sExp')toast('Respaldo exportado (en la práctica no se descarga)');
+  else if(e.target===$('#dlg'))closeDlg();
+});
+$('#dlg').addEventListener('input',e=>{if(e.target.id==='sPh'){S.phone=e.target.value;$$('.card').forEach(c=>c.querySelector('.pv').innerHTML=pvHTML(c.dataset.id))}});
+
+/* ---- Demostración guiada ---- */
+let run=0,playing=true,cur=0;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function W(ms,i){await sleep(ms);if(i!==run)throw 'stop'}
+async function ring(x,i,ms=900){const el=typeof x==='string'?$(x):x;if(!el)return;el.classList.add('tap');await W(ms,i);el.classList.remove('tap')}
+async function typeIn(el,txt,i,ms=130){for(let k=1;k<=txt.length;k++){el.value=txt.slice(0,k);el.dispatchEvent(new Event('input',{bubbles:true}));await W(ms,i)}}
+const toCard=id=>{const c=$(`.card[data-id="${id}"]`);if(c)$('#list').scrollTo({top:c.offsetTop-8,behavior:'smooth'})};
+const flash=id=>{const c=$(`.card[data-id="${id}"]`);if(c){c.classList.add('flash')}};
+const inC=(id,s)=>$(`.card[data-id="${id}"] ${s}`);
+const CH=[
+ {n:'Conoce la pantalla',d:'Arriba eliges ⭐ Hoy, Platillos o Combos. Debajo están el buscador y una tarjeta por cada platillo, con su precio, su mensaje y el botón de WhatsApp.',dur:7,
+  run:async i=>{await ring('#tabs',i,1600);await ring('#q',i,1400);await ring('.card .nm',i,1600)}},
+ {n:'Busca un platillo',d:'Escribe unas letras y listo. No importa si olvidas las tildes: “lasana” encuentra “Lasaña”. La búsqueda mira todas las pestañas a la vez.',dur:6,
+  run:async i=>{await ring('#q',i,700);await typeIn($('#q'),'lasana',i,170);await W(2200,i)}},
+ {n:'Cambia el orden',d:'Toca ◀ o ▶ para mover una tarjeta una posición. En el celular también puedes mantener presionado ⠿ y soltarlo sobre otra tarjeta: toma su lugar.',dur:7,
+  run:async i=>{toCard('l');await W(700,i);const b=inC('l','[data-a=prev]');await ring(b,i,1400);b.click();await W(300,i);$('#list').scrollTo({top:0});flash('l');await W(2200,i)}},
+ {n:'Precio y urgencia',d:'Escribe el precio y, si quieres, una urgencia. Se insertan solos en el mensaje, encima de la línea de Delivery, incluso si editaste el texto a mano.',dur:9,
+  run:async i=>{toCard('p');await W(600,i);const p=inC('p','[data-f=price]'),u=inC('p','[data-f=urg]');await ring(p,i,500);await typeIn(p,'12',i,220);await ring(u,i,500);await typeIn(u,'¡Solo hoy!',i,110);await ring(inC('p','.pv'),i,2200)}},
+ {n:'Marca lo agotado',d:'Toca “Marcar agotado”: la tarjeta se atenúa, no entra en el menú de hoy y, si intentas enviarla, la página te avisa. Se quita sola al día siguiente.',dur:7,
+  setup:()=>{S.price={c:'6'}},
+  run:async i=>{toCard('c');await W(700,i);const b=inC('c','[data-a=sold]');await ring(b,i,1500);b.click();await W(300,i);flash('c');await W(2200,i)}},
+ {n:'Tu número y el enlace',d:'En Ajustes escribe tu número (con o sin 51). El enlace “Pide aquí” de todos los mensajes usa siempre ese número. Ahí también exportas tu respaldo.',dur:11,
+  setup:()=>{S.price={p:'12'}},
+  run:async i=>{await ring('#bA',i,900);$('#bA').click();await W(700,i);await ring('#sPh',i,500);await typeIn($('#sPh'),'987654321',i,120);await ring('#sExp',i,1400);$('#sOk').click();await W(300,i);toCard('p');await W(600,i);await ring(inC('p','.pv'),i,2400)}},
+ {n:'Arma el menú de hoy',d:'Toca ★ en lo que vendes hoy. En la pestaña ⭐ Hoy aparece todo junto y un solo botón envía el menú completo en un mensaje.',dur:10,
+  setup:()=>{S.price={p:'12',l:'14'}},
+  run:async i=>{let b=inC('p','[data-a=star]');await ring(b,i,1100);b.click();await W(300,i);toCard('l');await W(600,i);b=inC('l','[data-a=star]');await ring(b,i,1100);b.click();await W(300,i);const t=$('[data-tab=hoy]');await ring(t,i,900);t.click();await W(500,i);await ring('[data-a=menu]',i,2200)}},
+ {n:'Aviso antes de enviar',d:'Si falta tu número o el precio, aparece este aviso: puedes revisar, abrir Ajustes o enviar igual. Así no mandas un mensaje incompleto sin darte cuenta.',dur:9,
+  setup:()=>{S.star={p:true,l:true};S.tab='hoy'},
+  run:async i=>{const m=$('[data-a=menu]');await ring(m,i,1100);m.click();await W(1500,i);await ring('#dSet',i,1500);await ring('#dGo',i,1200);$('#dBack').click();await W(800,i)}},
+ {n:'⭐ Hoy se limpia solo',d:'Cada día nuevo, las estrellas del día anterior se quitan solas. Así el menú de hoy nunca sale con los platillos de ayer.',dur:8,
+  setup:()=>{S.star={p:true,l:true};S.tab='hoy';S.price={p:'12',l:'14'}},
+  run:async i=>{await W(1200,i);toast('Al día siguiente…');await W(1700,i);S.star={};drawList();toast('Nuevo día: se limpió ⭐ Hoy');await W(2600,i)}},
+ {n:'Envía con imagen',d:'Toca el botón verde y elige WhatsApp: sale la imagen con el mensaje. Si el texto no aparece, ya quedó copiado: solo pégalo.',dur:9,
+  setup:()=>{S.price={p:'12'};S.phone='987654321'},
+  run:async i=>{toCard('p');await W(700,i);const b=inC('p','[data-a=send]');await ring(b,i,1500);b.click();await W(1000,i);await ring('#shWa',i,1300);$('#shWa').click();await W(2200,i)}}
+];
+$('#chips').innerHTML=CH.map((c,k)=>`<button class="chip" data-k="${k}"><span class="n">${k+1}</span>${c.n}<i></i></button>`).join('');
+function caption(k){
+  const c=CH[k];$('#st').textContent=`Paso ${k+1} de ${CH.length}`;$('#ti').textContent=c.n;$('#de').textContent=c.d;
+  $$('.chip').forEach((b,j)=>{b.classList.toggle('on',j===k);b.classList.toggle('done',j<k);b.querySelector('i').style.setProperty('--d',(CH[j].dur||7)+'s')});
+}
+function setPlaying(v){playing=v;$('#wrap').classList.toggle('paused',!v);$('#bpl').textContent=v?'⏸ Pausar y practicar':'▶ Ver la demostración'}
+async function go(k,keep){
+  const i=++run;cur=(k+CH.length)%CH.length;k=cur;if(!keep)setPlaying(true);
+  $$('.tap').forEach(x=>x.classList.remove('tap'));
+  S=fresh();if(CH[k].setup)CH[k].setup();$('#q').value='';closeDlg();paint();caption(k);
+  const b=$$('.chip')[k],f=b.querySelector('i');f.style.animation='none';void f.offsetWidth;f.style.animation='';
+  try{await CH[k].run(i);await W(1300,i);if(playing){k<CH.length-1?go(k+1,true):finish()}}catch(e){if(e!=='stop')console.error(e)}
+}
+function finish(){
+  setPlaying(false);$('#st').textContent='¡Listo!';$('#ti').textContent='Ahora practica tú';
+  $('#de').textContent='Toca el celular: escribe en el buscador, mueve tarjetas, marca agotado o prueba el envío. Para repasar un paso, elige su capítulo.';
+  $$('.chip').forEach(b=>{b.classList.remove('on');b.classList.add('done')});
+}
+function pause(){if(!playing)return;run++;setPlaying(false);$$('.tap').forEach(x=>x.classList.remove('tap'))}
+$('.phone').addEventListener('pointerdown',e=>{if(e.isTrusted)pause()},true);
+$('#bpl').onclick=()=>playing?pause():go(cur);
+$('#bp').onclick=()=>go(cur-1);$('#bn').onclick=()=>go(cur+1);
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)go(+b.dataset.k)});
+go(0);
+</script>
+</body>
+</html>
